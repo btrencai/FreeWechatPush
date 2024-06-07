@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 # 从测试号信息获取
 appID = "wx79f53681889a6969"
-appSecret = "aa308e30a4029be88dc3e58b1aaf4aa1"
+appSecret = "aa308e30a4029be88dc3e58b1aaf4aa1","oSKc66qlkDXZIwq72CzR-wfm0HcU"
 # 收信人ID即 用户列表中的微信号
 openId = "oSKc66rCB7hgO4U4Gg-6xxYn7mR0"
 # 天气预报模板ID
@@ -130,4 +130,4 @@ def weather_report(this_city):
 
 
 if __name__ == '__main__':
-    weather_report("宁波慈溪")
+    weather_report("慈溪")
