@@ -1,22 +1,16 @@
 # 安装依赖 pip3 install requests html5lib bs4 schedule
-
-import time
+import os
 import requests
 import json
-import schedule
 from bs4 import BeautifulSoup
-
 
 # 从测试号信息获取
 appID = "wx79f53681889a6969"
 appSecret = "aa308e30a4029be88dc3e58b1aaf4aa1"
-#收信人ID即 用户列表中的微信号，见上文
+# 收信人ID即 用户列表中的微信号
 openId = "oSKc66rCB7hgO4U4Gg-6xxYn7mR0"
 # 天气预报模板ID
 weather_template_id = "qIx5MPIP0TzANLnDrvm0npcGy-qehjpe7qOL1E7SBPA"
-# 时间表模板ID
-timetable_template_id = ""
-
 
 def get_weather(my_city):
     urls = ["http://www.weather.com.cn/textFC/hb.shtml",
@@ -123,44 +117,17 @@ def send_weather(access_token, weather):
     print(requests.post(url, json.dumps(body)).text)
 
 
-def send_timetable(access_token, message):
-    body = {
-        "touser": openId,
-        "template_id": timetable_template_id.strip(),
-        "url": "https://weixin.qq.com",
-        "data": {
-            "message": {
-                "value": message
-            },
-        }
-    }
-    url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}'.format(access_token)
-    print(requests.post(url, json.dumps(body)).text)
 
-
-def weather_report(city):
+def weather_report(this_city):
     # 1.获取access_token
     access_token = get_access_token()
     # 2. 获取天气
-    weather = get_weather(city)
+    weather = get_weather(this_city)
     print(f"天气信息： {weather}")
     # 3. 发送消息
     send_weather(access_token, weather)
 
 
-def timetable(message):
-    # 1.获取access_token
-    access_token = get_access_token()
-    # 3. 发送消息
-    send_timetable(access_token, message)
-
 
 if __name__ == '__main__':
     weather_report("慈溪")
-    # timetable("第二教学楼十分钟后开始英语课")
-
-    # schedule.every().day.at("18:30").do(weather_report, "南京")
-    # schedule.every().monday.at("13:50").do(timetable, "第二教学楼十分钟后开始英语课")
-    #while True:
-    #    schedule.run_pending()
-    #    time.sleep(1)
